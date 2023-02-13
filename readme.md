@@ -1,6 +1,6 @@
 <h1>ChatGPT + GMail + Google meet + Google Calendar chrome extension</h1>
 
 
-https://user-images.githubusercontent.com/98763754/218455394-089c449a-a397-4de9-b711-2e4eb1e54e94.mp4
 
+https://user-images.githubusercontent.com/98763754/218458668-088b4950-6976-4a5b-b36e-0cd14266341b.mp4
 
