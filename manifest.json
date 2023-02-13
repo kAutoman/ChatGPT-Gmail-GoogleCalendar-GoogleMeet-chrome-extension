@@ -1,0 +1,34 @@
+{
+  "name": "OpenAi with google calendar and gmail and google meet",
+  "version": "1.0",
+  "description": "Uses OAuth to connect to Google API",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "GAPI Tutorial",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+    "js": ["popup.js"]
+  }],
+  "oauth2": {
+    "client_id": "989530057378-ektopvf0u6oavtuq3dlh9uli6lkct1fe.apps.googleusercontent.com",
+    "scopes":[
+      "https://mail.google.com/",
+      "https://www.googleapis.com/auth/calendar",
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "alarm"
+  ],
+  "content_security_policy": "script-src 'self' https://apis.google.com/; object-src 'self' ",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl53JyWyX3lDSeA1WQuDO/50qoMK8bQ8JjQdX93TaPYrv3PZC881ol4W3fZCiJdeOg4UitFiFd8WuwP9eeN9DaPJg0/1rq5DTiqEUD8inTjg4DjhBWePBlRiM9l8CMJBu8453gUyavtnyrLQxti9Ktg7PQjAJUR/BcLaKuxnsbhSo8eiK3PaVprjSyT6dBZGfVWTpuSkXHY6s5kzUHrIlqcoLhnmlRsZqFzjHceeLlnu38GPxQBHeEEHLwIplso+acHFw5XW9jVcFMww9yuDhzTq90P9lBrotJd5KhlwCr/PD1NHGPcu66bCAJcbGBo4riHAajl7jzaF24OSIcDlVCwIDAQAB"
+}
