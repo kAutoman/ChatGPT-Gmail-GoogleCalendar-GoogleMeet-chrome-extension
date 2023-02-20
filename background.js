@@ -139,7 +139,13 @@ function createMeeting(chatContent,type) {
       
       }
       else if((type === 'reschedule') || (type === 'decline')){
-        let question = `get event_name,email,duration in miliseconds,date_time as json format with curly braces in this sentense "${chatContent}"`;
+        let question;
+        if(type === 'reschedule'){
+          question = `get event_name,email,duration in miliseconds,date_time as json format with curly braces in this sentense "${chatContent}"`;
+        }
+        else {
+          question = `get email,date_time as json format with curly braces in this sentense "${chatContent}"`;
+        }
         let response = await fetch("http://104.248.12.97:3000?prompt=" + question);
         let text = await response.text();
         let parsedJson = JSON.parse(text);
@@ -168,27 +174,17 @@ function createMeeting(chatContent,type) {
                 if(!item.attendees){
                   return;
                 }
-                if(type === 'reschedule'){
+                
                   item.attendees.map(attendee => {
                     //find customer's email address in attendees list
                     if(attendee.email === customer ){
                       canUpdate = true;
                     }
                   })
-                }
-                else if(type === 'decline'){
-                  item.attendees.map(attendee => {
-                    //find my email address in attendees list
-                    if(attendee.email === organizer ){
-                      canUpdate = true;
-                    }
-                  })
-                }
+                
                 if(item.attendees && canUpdate){
                   let startDate = new Date(parsedJson.date_time);
                   let endDate = new Date(startDate.getTime() + parsedJson.duration);
-                  let isoStartDate = new Date(startDate.getTime()).toISOString().split(".")[0];
-                  let isoEndDate = new Date(endDate.getTime()).toISOString().split(".")[0];
                   let attendees = item.attendees;
                   if(type === 'decline'){
                     attendees.map(attendee => {
@@ -199,6 +195,8 @@ function createMeeting(chatContent,type) {
                   }
                   let meetingStart,meetingEnd;
                   if(type === 'reschedule'){
+                    let isoStartDate = new Date(startDate.getTime()).toISOString().split(".")[0];
+                    let isoEndDate = new Date(endDate.getTime()).toISOString().split(".")[0];
                     meetingStart = {
                       dateTime: `${isoStartDate}`,
                       timeZone: 'Europe/London',
